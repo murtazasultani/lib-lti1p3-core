@@ -96,11 +96,14 @@ class OidcInitiator
 
             $nonce = $this->generator->generate();
 
+            $ltiMessageHint = $oidcRequest->getParameters()->get('lti_message_hint');
+
             $this->builder
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_SUB, $registration->getIdentifier())
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_ISS, $registration->getTool()->getAudience())
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_AUD, $registration->getPlatform()->getAudience())
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_NONCE, $nonce->getValue());
+                ->withClaim(LtiMessagePayloadInterface::CLAIM_NONCE, $nonce->getValue())
+                ->withClaim(LtiMessagePayloadInterface::CLAIM_PARAMETERS, $oidcRequest->getParameters()->remove('lti_message_hint'));
 
             $statePayload = $this->builder->buildMessagePayload($toolKeyChain);
 
@@ -112,7 +115,7 @@ class OidcInitiator
                     'login_hint' => $oidcRequest->getParameters()->getMandatory('login_hint'),
                     'nonce' => $nonce->getValue(),
                     'state' => $statePayload->getToken()->toString(),
-                    'lti_message_hint' => $oidcRequest->getParameters()->get('lti_message_hint'),
+                    'lti_message_hint' => $ltiMessageHint,
                     'scope' => 'openid',
                     'response_type' => 'id_token',
                     'response_mode' => 'form_post',

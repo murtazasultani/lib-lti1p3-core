@@ -100,8 +100,7 @@ class OidcInitiator
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_SUB, $registration->getIdentifier())
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_ISS, $registration->getTool()->getAudience())
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_AUD, $registration->getPlatform()->getAudience())
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_NONCE, $nonce->getValue())
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_PARAMETERS, $oidcRequest->getParameters());
+                ->withClaim(LtiMessagePayloadInterface::CLAIM_NONCE, $nonce->getValue());
 
             $statePayload = $this->builder->buildMessagePayload($toolKeyChain);
 

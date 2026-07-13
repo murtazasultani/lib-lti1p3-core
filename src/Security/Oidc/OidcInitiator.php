@@ -118,7 +118,7 @@ class OidcInitiator
             return new LtiMessage(
                 $registration->getPlatform()->getOidcAuthenticationUrl(),
                 [
-                    'redirect_uri' => $oidcRequest->getParameters()->getMandatory('target_link_uri'),
+                    'redirect_uri' => $redirectUri,
                     'client_id' => $registration->getClientId(),
                     'login_hint' => $loginHint,
                     'nonce' => $nonce->getValue(),

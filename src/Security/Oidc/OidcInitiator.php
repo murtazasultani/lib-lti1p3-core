@@ -105,7 +105,13 @@ class OidcInitiator
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_ISS, $registration->getTool()->getAudience())
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_AUD, $registration->getPlatform()->getAudience())
                 ->withClaim(LtiMessagePayloadInterface::CLAIM_NONCE, $nonce->getValue())
-                ->withClaim(LtiMessagePayloadInterface::CLAIM_PARAMETERS, $oidcRequest->getParameters()->remove('lti_message_hint'));
+                ->withClaim(
+                    LtiMessagePayloadInterface::CLAIM_PARAMETERS,
+                    $oidcRequest->getParameters()
+                        ->remove('target_link_uri')
+                        ->remove('login_hint')
+                        ->remove('lti_message_hint')
+                );
 
             $statePayload = $this->builder->buildMessagePayload($toolKeyChain);
 

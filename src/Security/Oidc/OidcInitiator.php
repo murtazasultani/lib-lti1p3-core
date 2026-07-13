@@ -96,6 +96,8 @@ class OidcInitiator
 
             $nonce = $this->generator->generate();
 
+            $redirectUri = $oidcRequest->getParameters()->getMandatory('target_link_uri');
+            $loginHint = $oidcRequest->getParameters()->getMandatory('login_hint');
             $ltiMessageHint = $oidcRequest->getParameters()->get('lti_message_hint');
 
             $this->builder

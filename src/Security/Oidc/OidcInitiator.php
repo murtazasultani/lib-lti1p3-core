@@ -120,7 +120,7 @@ class OidcInitiator
                 [
                     'redirect_uri' => $oidcRequest->getParameters()->getMandatory('target_link_uri'),
                     'client_id' => $registration->getClientId(),
-                    'login_hint' => $oidcRequest->getParameters()->getMandatory('login_hint'),
+                    'login_hint' => $loginHint,
                     'nonce' => $nonce->getValue(),
                     'state' => $statePayload->getToken()->toString(),
                     'lti_message_hint' => $ltiMessageHint,
